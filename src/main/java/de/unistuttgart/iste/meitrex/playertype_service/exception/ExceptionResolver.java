@@ -1,6 +1,5 @@
 package de.unistuttgart.iste.meitrex.playertype_service.exception;
 
-import de.unistuttgart.iste.meitrex.common.exception.ExceptionToGraphQlErrorConverter;
 import graphql.GraphQLError;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +15,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ExceptionResolver extends DataFetcherExceptionResolverAdapter {
 
-    @Override
-    protected GraphQLError resolveToSingleError(@NonNull Throwable ex, @NonNull DataFetchingEnvironment env) {
-        return ExceptionToGraphQlErrorConverter.resolveToSingleError(ex, env);
-    }
+
 
 }
