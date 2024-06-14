@@ -1,9 +1,9 @@
 package de.unistuttgart.iste.meitrex.playertype_service.persistence.mapper;
-import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.ShortBartleTestResult;
 import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.ShortBartleTestResultEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import de.unistuttgart.iste.meitrex.generated.dto.ShortBartleTestResult;
 
 @Component
 @RequiredArgsConstructor
