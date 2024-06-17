@@ -5,9 +5,9 @@ services:
     image: postgres:alpine
     restart: always
     expose:
-      - 8082
+      - 8132
     ports:
-      - "8082:5432"
+      - "8132:5432"
     volumes:
       - playertypedata:/var/lib/postgresql/data
     environment:
@@ -21,11 +21,11 @@ services:
     restart: always
     container_name: playertype_service
     expose:
-      - 8081
-      - 8082
+      - 8100
+      - 8101
     ports:
-      - "8081:8081"
-      - "8082:8082"
+      - "8100:8100"
+      - "8101:8101"
     depends_on:
       - database-playertype
     environment:
@@ -37,8 +37,8 @@ services:
     command: [
       "./daprd",
       "--app-id", "playertype_service",
-      "--app-port", "8082",
-      "--dapr-http-port", "8081",
+      "--app-port", "8101",
+      "--dapr-http-port", "8100",
       "--resources-path", "./components"
     ]
     volumes:
