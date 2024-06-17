@@ -1,6 +1,10 @@
 package de.unistuttgart.iste.meitrex.playertype_service.persistence.entity;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Enumeration;
 
 public class ShortBartleTest {
 
@@ -13,19 +17,38 @@ public class ShortBartleTest {
 
     }
 
-    private final Question[] questions;
+    private Question[] questions = new Question[]{};
 
     public ShortBartleTest() {
 
-        // Relative path to where questions are
-        String questionsPath = "./src/main/resources/questions/";
-        File[] questionFiles = new File(questionsPath).listFiles();
-        this.questions = new Question[questionFiles.length];
+        String questionsPath = null;
+        try {
 
-        for (int i = 0; i < questionFiles.length; i++) {
-            String questionPath = questionsPath + "question" + i + ".json";
-            Question question = Question.ParseJsonFile(questionPath);
-            questions[i] = question;
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            Enumeration<URL> resources = classLoader.getResources("questions");
+
+            while (resources.hasMoreElements()) {
+                URL url = resources.nextElement();
+                String fileName = url.getFile();
+                if (fileName.endsWith("questions")) {
+                    questionsPath = fileName;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (null != questionsPath) {
+
+            File[] questionFiles = new File(questionsPath).listFiles();
+            this.questions = new Question[questionFiles.length];
+
+            for (File questionFile : questionFiles) {
+                String questionPath = questionFile.getPath();
+                Question question = Question.ParseJsonFile(questionPath);
+                questions[question.getId()] = question;
+            }
         }
 
     }
