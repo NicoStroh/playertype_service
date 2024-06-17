@@ -18,7 +18,7 @@ public class ShortBartleTest {
     public ShortBartleTest() {
 
         // Relative path to where questions are
-        String questionsPath = "./playertype_service/src/main/resources/questions/";
+        String questionsPath = "./src/main/resources/questions/";
         File[] questionFiles = new File(questionsPath).listFiles();
         this.questions = new Question[questionFiles.length];
 
