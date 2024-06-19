@@ -15,8 +15,27 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShortBartleTestResultEntity {
+public class PlayerTypeTestResultEntity {
 
+    public PlayerTypeTestResultEntity(UUID userUUID, boolean userHasTakenTest) {
+
+        this.userUUID = userUUID;
+        this.userHasTakenTest = userHasTakenTest;
+
+    }
+
+    public PlayerTypeTestResultEntity(UUID userUUID,
+                                      int achieverPercentage, int explorerPercentage,
+                                      int socializerPercentage, int killerPercentage) {
+
+        this.userUUID = userUUID;
+        this.userHasTakenTest = true;
+        this.achieverPercentage = achieverPercentage;
+        this.explorerPercentage = explorerPercentage;
+        this.socializerPercentage = socializerPercentage;
+        this.killerPercentage = killerPercentage;
+
+    }
 
     @Id
     private UUID userUUID;

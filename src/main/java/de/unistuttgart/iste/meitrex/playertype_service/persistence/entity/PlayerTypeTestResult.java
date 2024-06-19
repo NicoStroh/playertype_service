@@ -1,20 +1,23 @@
 package de.unistuttgart.iste.meitrex.playertype_service.persistence.entity;
 
-public class ShortBartleTestResult {
+import lombok.Getter;
+
+@Getter
+public class PlayerTypeTestResult {
 
     private int achieverPercentage;
     private int explorerPercentage;
     private int socializerPercentage;
     private int killerPercentage;
 
-    public ShortBartleTestResult() {
+    public PlayerTypeTestResult() {
         this.achieverPercentage = -1;
         this.explorerPercentage = -1;
         this.socializerPercentage = -1;
         this.killerPercentage = -1;
     }
 
-    public ShortBartleTestResult(int achieverPercentage, int explorerPercentage,
+    public PlayerTypeTestResult(int achieverPercentage, int explorerPercentage,
                                  int socializerPercentage, int killerPercentage) {
         this.achieverPercentage = achieverPercentage;
         this.explorerPercentage = explorerPercentage;
@@ -39,7 +42,7 @@ public class ShortBartleTestResult {
     }
 
     public void print() {
-        System.out.println("ShortBartleTestResult {" +
+        System.out.println("PlayerTypeTestResult {" +
                 "\n  achieverPercentage=" + achieverPercentage +
                 "\n  explorerPercentage=" + explorerPercentage +
                 "\n  socializerPercentage=" + socializerPercentage +

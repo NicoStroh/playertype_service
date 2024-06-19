@@ -1,22 +1,27 @@
 package de.unistuttgart.iste.meitrex.playertype_service.controller;
 
-import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.ShortBartleTest;
+import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.PlayerTypeTest;
+import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.PlayerTypeTestResultEntity;
 import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.Question;
-import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.ShortBartleTestResult;
+import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.PlayerTypeTestResult;
+import de.unistuttgart.iste.meitrex.playertype_service.service.PlayerTypeService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.Optional;
+import java.util.UUID;
+
+@Slf4j
 @Controller
+@RequiredArgsConstructor
 public class PlayerTypeController {
 
-    private final ShortBartleTest test = new ShortBartleTest();
-
-    @QueryMapping
-    public String hello() {
-        return "hello";
-    }
+    private final PlayerTypeService playerTypeService;
+    private final PlayerTypeTest test = new PlayerTypeTest();
 
     @QueryMapping
     public Question[] test() {
@@ -24,14 +29,56 @@ public class PlayerTypeController {
     }
 
     @MutationMapping
-    public String submitAnswer(@Argument("questionId") int questionId, @Argument("answer") boolean answer) {
+    public String submitAnswer(@Argument final int questionId, @Argument final boolean answer) {
         this.test.setAnswer(questionId, answer);
         return "Answer submitted successfully!";
     }
 
+    @MutationMapping
+    public PlayerTypeTestResultEntity evaluateTest(@Argument final UUID userUUID) {
+
+        PlayerTypeTestResult result = this.test.evaluateTest();
+        return playerTypeService.saveTestResult(userUUID, result);
+
+    }
+
     @QueryMapping
-    public ShortBartleTestResult evaluateTest() {
-        return this.test.evaluateTest();
+    public boolean userHasTakenTest(@Argument final UUID userUUID) {
+
+        Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
+        return entity.isPresent() && entity.get().isUserHasTakenTest();
+
+    }
+
+    @MutationMapping
+    public PlayerTypeTestResultEntity createUser(@Argument final UUID userUUID) {
+
+        Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
+        if (entity.isEmpty()) {
+            // User is not present in playertype_database
+            return playerTypeService.createUser(userUUID);
+        }
+        return entity.get();
+    }
+
+    @QueryMapping
+    public boolean userCanSeeScoreboard(@Argument final UUID userUUID) {
+
+        Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
+        if (entity.isPresent()) {
+            return entity.get().getKillerPercentage() >= 50;
+        }
+        return false;
+    }
+
+    @QueryMapping
+    public boolean userCanSeeBadges(@Argument final UUID userUUID) {
+
+        Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
+        if (entity.isPresent()) {
+            return entity.get().getAchieverPercentage() >= 50;
+        }
+        return false;
     }
 
 }

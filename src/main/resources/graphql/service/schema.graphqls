@@ -6,7 +6,8 @@ type Question {
   selectedOption: Boolean!
 }
 
-type ShortBartleTestResult {
+type ShortBartleTestResultEntity {
+  userHasTakenTest: Boolean!
   achieverPercentage: Int!
   explorerPercentage: Int!
   socializerPercentage: Int!
@@ -15,10 +16,13 @@ type ShortBartleTestResult {
 
 type Mutation {
   submitAnswer(questionId: Int!, answer: Boolean!): String
+  evaluateTest(userUUID: UUID!): ShortBartleTestResultEntity!
+  createUser(userUUID: UUID!): ShortBartleTestResultEntity!
 }
 
 type Query {
-  hello: String!
   test: [Question!]!
-  evaluateTest: ShortBartleTestResult!
+  userHasTakenTest(userUUID: UUID!): Boolean!
+  userCanSeeScoreboard(userUUID: UUID!): Boolean!
+  userCanSeeBadges(userUUID: UUID!): Boolean!
 }
