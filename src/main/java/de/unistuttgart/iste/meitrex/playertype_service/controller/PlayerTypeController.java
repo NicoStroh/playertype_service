@@ -66,7 +66,8 @@ public class PlayerTypeController {
 
         Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
         if (entity.isPresent()) {
-            return entity.get().getKillerPercentage() >= 50;
+            return entity.get().getKillerPercentage() >= 50
+                    || entity.get().getAchieverPercentage() >= 50;
         }
         return false;
     }
@@ -76,7 +77,9 @@ public class PlayerTypeController {
 
         Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
         if (entity.isPresent()) {
-            return entity.get().getAchieverPercentage() >= 50;
+            return entity.get().getAchieverPercentage() >= 50
+                    || entity.get().getExplorerPercentage() >= 50
+                    || entity.get().getSocializerPercentage() >= 50;
         }
         return false;
     }
