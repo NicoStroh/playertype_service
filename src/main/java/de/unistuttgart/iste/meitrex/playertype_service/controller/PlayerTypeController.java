@@ -65,23 +65,19 @@ public class PlayerTypeController {
     public boolean userCanSeeScoreboard(@Argument final UUID userUUID) {
 
         Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
-        if (entity.isPresent()) {
-            return entity.get().getKillerPercentage() >= 50
-                    || entity.get().getAchieverPercentage() >= 50;
-        }
-        return false;
+        return entity.isPresent() &&
+                (entity.get().getKillerPercentage() >= 50
+                || entity.get().getAchieverPercentage() >= 50);
     }
 
     @QueryMapping
     public boolean userCanSeeBadges(@Argument final UUID userUUID) {
 
         Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
-        if (entity.isPresent()) {
-            return entity.get().getAchieverPercentage() >= 50
-                    || entity.get().getExplorerPercentage() >= 50
-                    || entity.get().getSocializerPercentage() >= 50;
-        }
-        return false;
+        return entity.isPresent() &&
+                (entity.get().getKillerPercentage() >= 50
+                || entity.get().getExplorerPercentage() >= 50
+                || entity.get().getSocializerPercentage() >= 50);
     }
 
 }
