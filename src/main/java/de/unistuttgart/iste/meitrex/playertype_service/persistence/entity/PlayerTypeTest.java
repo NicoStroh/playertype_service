@@ -1,9 +1,12 @@
 package de.unistuttgart.iste.meitrex.playertype_service.persistence.entity;
 
+import lombok.Getter;
+
 import java.io.File;
 import java.net.URL;
 import java.util.Enumeration;
 
+@Getter
 public class PlayerTypeTest {
 
     /**
@@ -76,10 +79,6 @@ public class PlayerTypeTest {
 
     public void setAnswer(int questionId, boolean selectedAnswer) {
         this.questions[questionId].setSelectedOption(selectedAnswer);
-    }
-
-    public Question[] getQuestions() {
-        return this.questions;
     }
 
     private double calculateAchieverPercentage() {

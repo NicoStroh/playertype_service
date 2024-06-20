@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Entity(name = "ShortBartleTestResult")
+@Entity(name = "PlyaerTypeTestResult")
 @Data
 @Builder
 @AllArgsConstructor
