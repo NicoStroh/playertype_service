@@ -17,7 +17,6 @@ type ShortBartleTestResultEntity {
 type Mutation {
   submitAnswer(questionId: Int!, answer: Boolean!): String
   evaluateTest(userUUID: UUID!): ShortBartleTestResultEntity!
-  createUser(userUUID: UUID!): ShortBartleTestResultEntity!
 }
 
 type Query {
