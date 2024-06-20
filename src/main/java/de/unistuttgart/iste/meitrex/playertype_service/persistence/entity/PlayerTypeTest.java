@@ -82,54 +82,39 @@ public class PlayerTypeTest {
         return this.questions;
     }
 
-    private int calculateAchiever() {
-        return IA(this.questions[0].getSelectedOption())
+    private double calculateAchieverPercentage() {
+        return (double) (100 * (IA(this.questions[0].getSelectedOption())
                 + IA(! this.questions[1].getSelectedOption())
                 + IA(! this.questions[2].getSelectedOption())
                 + IA(! this.questions[3].getSelectedOption())
-                + IA(this.questions[4].getSelectedOption())
                 + IA(! this.questions[5].getSelectedOption())
-                + IA(this.questions[6].getSelectedOption())
-                + IA(this.questions[7].getSelectedOption())
-                + IA(this.questions[8].getSelectedOption());
+                + IA(! this.questions[6].getSelectedOption()))) / 6;
     }
 
-    private int calculateExplorer() {
-        return IA(this.questions[0].getSelectedOption())
-                + IA(this.questions[1].getSelectedOption())
+    private double calculateExplorerPercentage() {
+        return (double) (100 * (IA(this.questions[0].getSelectedOption())
                 + IA(this.questions[2].getSelectedOption())
-                + IA(this.questions[3].getSelectedOption())
-                + IA(this.questions[4].getSelectedOption())
                 + IA(! this.questions[5].getSelectedOption())
                 + IA(! this.questions[6].getSelectedOption())
-                + IA(this.questions[7].getSelectedOption())
-                + IA(! this.questions[8].getSelectedOption());
+                + IA(! this.questions[8].getSelectedOption()))) / 5;
     }
 
-    private int calculateSocializer() {
-        return IA(! this.questions[0].getSelectedOption())
-                + IA(this.questions[1].getSelectedOption())
-                + IA(this.questions[2].getSelectedOption())
-                + IA(this.questions[3].getSelectedOption())
+    private double calculateSocializerPercentage() {
+        return (double) (100 * (IA(! this.questions[0].getSelectedOption()))
                 + IA(! this.questions[4].getSelectedOption())
                 + IA(! this.questions[5].getSelectedOption())
-                + IA(this.questions[6].getSelectedOption())
                 + IA(! this.questions[7].getSelectedOption())
                 + IA(! this.questions[8].getSelectedOption())
-                + IA(! this.questions[9].getSelectedOption());
+                + IA(! this.questions[9].getSelectedOption())) / 6;
     }
 
-    private int calculateKiller() {
-        return IA(! this.questions[0].getSelectedOption())
+    private double calculateKillerPercentage() {
+        return (double) (100 * (IA(! this.questions[0].getSelectedOption())
                 + IA(! this.questions[1].getSelectedOption())
                 + IA(! this.questions[2].getSelectedOption())
                 + IA(! this.questions[3].getSelectedOption())
-                + IA(this.questions[4].getSelectedOption())
-                + IA(this.questions[5].getSelectedOption())
                 + IA(! this.questions[6].getSelectedOption())
-                + IA(this.questions[7].getSelectedOption())
-                + IA(this.questions[8].getSelectedOption())
-                + IA(this.questions[9].getSelectedOption());
+                + IA(this.questions[9].getSelectedOption()))) / 6;
     }
 
     /**
@@ -139,17 +124,24 @@ public class PlayerTypeTest {
      */
     public PlayerTypeTestResult evaluateTest() {
 
-        int achiever = this.calculateAchiever();
-        int explorer = this.calculateExplorer();
-        int socializer = this.calculateSocializer();
-        int killer = this.calculateKiller();
+        double achieverPercentage = this.calculateAchieverPercentage();
+        double explorerPercentage = this.calculateExplorerPercentage();
+        double socializerPercentage = this.calculateSocializerPercentage();
+        double killerPercentage = this.calculateKillerPercentage();
 
-        int achieverPercentage = (achiever * 8) / 100;
-        int explorerPercentage = (explorer * 8) / 100;
-        int socializerPercentage = (socializer * 9) / 100;
-        int killerPercentage = (killer * 9) / 100;
+        double coefficient = 200 / (achieverPercentage + explorerPercentage
+                + socializerPercentage + killerPercentage);
 
-        return new PlayerTypeTestResult(achieverPercentage, explorerPercentage, socializerPercentage, killerPercentage);
+        achieverPercentage *= coefficient;
+        explorerPercentage *= coefficient;
+        socializerPercentage *= coefficient;
+        killerPercentage *= coefficient;
+
+        return new PlayerTypeTestResult((int)achieverPercentage,
+                (int)explorerPercentage,
+                (int)socializerPercentage,
+                (int)killerPercentage);
+
     }
 
 }
