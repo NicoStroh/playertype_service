@@ -46,19 +46,13 @@ public class PlayerTypeController {
     public boolean userHasTakenTest(@Argument final UUID userUUID) {
 
         Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
-        return entity.isPresent() && entity.get().isUserHasTakenTest();
-
-    }
-
-    @MutationMapping
-    public PlayerTypeTestResultEntity createUser(@Argument final UUID userUUID) {
-
-        Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
         if (entity.isEmpty()) {
             // User is not present in playertype_database
-            return playerTypeService.createUser(userUUID);
+            playerTypeService.createUser(userUUID);
+            return false;
         }
-        return entity.get();
+        return entity.get().isUserHasTakenTest();
+
     }
 
     @QueryMapping
