@@ -117,17 +117,21 @@ public class PlayerTypeTest {
     }
 
     /**
-     * Evaluates the answers for the question and calculates the player types.
+     * Normalizes the percentageValues if there is at least one > 100
      *
-     * @return a ShortBartleTestResult, representing the player types of the user
+     * @param achieverPercentage Achiever
+     * @param explorerPercentage Explorer
+     * @param socializerPercentage Socializer
+     * @param killerPercentage Killer
+     *
+     * @return a PlayerTypeTestResult with normalized values
      */
-    public PlayerTypeTestResult evaluateTest() {
+    private static PlayerTypeTestResult normalizeValues(double achieverPercentage,
+                                                         double explorerPercentage,
+                                                         double socializerPercentage,
+                                                         double killerPercentage) {
 
-        double achieverPercentage = this.calculateAchieverPercentage();
-        double explorerPercentage = this.calculateExplorerPercentage();
-        double socializerPercentage = this.calculateSocializerPercentage();
-        double killerPercentage = this.calculateKillerPercentage();
-
+        // Sum up to 200
         double coefficient = 200 / (achieverPercentage + explorerPercentage
                 + socializerPercentage + killerPercentage);
 
@@ -136,10 +140,64 @@ public class PlayerTypeTest {
         socializerPercentage *= coefficient;
         killerPercentage *= coefficient;
 
-        return new PlayerTypeTestResult((int)achieverPercentage,
-                (int)explorerPercentage,
-                (int)socializerPercentage,
-                (int)killerPercentage);
+
+        // Do any values exceed 100?
+        if (achieverPercentage > 100) {
+            double excess = achieverPercentage - 100;
+            double distribution = 1 + (excess / (200 - achieverPercentage));
+            explorerPercentage *= distribution;
+            socializerPercentage *= distribution;
+            killerPercentage *= distribution;
+            achieverPercentage = 100;
+        }
+        if (explorerPercentage > 100) {
+            double excess = explorerPercentage - 100;
+            double distribution = 1 + (excess / (200 - explorerPercentage));
+            achieverPercentage *= distribution;
+            socializerPercentage *= distribution;
+            killerPercentage *= distribution;
+            explorerPercentage = 100;
+        }
+        if (socializerPercentage > 100) {
+            double excess = socializerPercentage - 100;
+            double distribution = 1 + (excess / (200 - socializerPercentage));
+            achieverPercentage *= distribution;
+            explorerPercentage *= distribution;
+            killerPercentage *= distribution;
+            socializerPercentage = 100;
+        }
+        if (killerPercentage > 100) {
+            double excess = killerPercentage - 100;
+            double distribution = 1 + (excess / (200 - killerPercentage));
+            achieverPercentage *= distribution;
+            explorerPercentage *= distribution;
+            socializerPercentage *= distribution;
+            killerPercentage = 100;
+        }
+
+        return new PlayerTypeTestResult((int) Math.round(achieverPercentage),
+                (int) Math.round(explorerPercentage),
+                (int) Math.round(socializerPercentage),
+                (int) Math.round(killerPercentage));
+
+    }
+
+    /**
+     * Evaluates the answers for the question and calculates the player types.
+     *
+     * @return a PlayerTypeTestResult, representing the player types of the user
+     */
+    public PlayerTypeTestResult evaluateTest() {
+
+        double achieverPercentage = this.calculateAchieverPercentage();
+        double explorerPercentage = this.calculateExplorerPercentage();
+        double socializerPercentage = this.calculateSocializerPercentage();
+        double killerPercentage = this.calculateKillerPercentage();
+
+        return normalizeValues(achieverPercentage,
+                explorerPercentage,
+                socializerPercentage,
+                killerPercentage);
 
     }
 
