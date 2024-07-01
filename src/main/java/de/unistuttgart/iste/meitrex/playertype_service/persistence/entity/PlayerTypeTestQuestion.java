@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import com.google.gson.Gson;
 
-public class Question {
+public class PlayerTypeTestQuestion {
 
     private final int id;
     private final String text;
@@ -12,26 +12,26 @@ public class Question {
     private final String option1;
     private boolean selectedOption;
 
-    public Question(String text) {
+    public PlayerTypeTestQuestion(String text) {
         this.id = 0;
         this.text = text;
         this.option0 = "Yes";
         this.option1 = "No";
     }
 
-    public Question(int id, String text, String option0, String option1) {
+    public PlayerTypeTestQuestion(int id, String text, String option0, String option1) {
         this.id = id;
         this.text = text;
         this.option0 = option0;
         this.option1 = option1;
     }
 
-    // Parst Json-Datei zu Question-Objekt
-    public static Question ParseJsonFile(String questionPath) {
+    // Parst Json-Datei zu PlayerTypeTestQuestion-Objekt
+    public static PlayerTypeTestQuestion ParseJsonFile(String questionPath) {
         try (FileReader reader = new FileReader(questionPath)) {
 
             Gson gson = new Gson();
-            return gson.fromJson(reader, Question.class);
+            return gson.fromJson(reader, PlayerTypeTestQuestion.class);
 
         } catch (IOException e) {
 

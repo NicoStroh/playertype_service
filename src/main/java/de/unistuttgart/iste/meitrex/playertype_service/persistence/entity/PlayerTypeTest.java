@@ -24,7 +24,7 @@ public class PlayerTypeTest {
 
     }
 
-    private Question[] questions = new Question[]{};
+    private PlayerTypeTestQuestion[] questions = new PlayerTypeTestQuestion[]{};
 
     public PlayerTypeTest() {
 
@@ -36,11 +36,11 @@ public class PlayerTypeTest {
 
             if (null != questionFiles) {
 
-                this.questions = new Question[questionFiles.length];
+                this.questions = new PlayerTypeTestQuestion[questionFiles.length];
 
                 for (File questionFile : questionFiles) {
                     String questionPath = questionFile.getPath();
-                    Question question = Question.ParseJsonFile(questionPath);
+                    PlayerTypeTestQuestion question = PlayerTypeTestQuestion.ParseJsonFile(questionPath);
 
                     if (null != question) {
                         questions[question.getId()] = question;
