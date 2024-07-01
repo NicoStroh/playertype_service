@@ -1,4 +1,4 @@
-type Question {
+type PlayerTypeTestQuestion {
   id: ID!
   text: String!
   option0: String!
@@ -20,7 +20,7 @@ type Mutation {
 }
 
 type Query {
-  test: [Question!]!
+  test: [PlayerTypeTestQuestion!]!
   userHasTakenTest(userUUID: UUID!): Boolean!
   userCanSeeScoreboard(userUUID: UUID!): Boolean!
   userCanSeeBadges(userUUID: UUID!): Boolean!
