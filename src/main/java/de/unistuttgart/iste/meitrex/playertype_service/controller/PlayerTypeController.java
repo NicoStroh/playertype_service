@@ -2,7 +2,7 @@ package de.unistuttgart.iste.meitrex.playertype_service.controller;
 
 import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.PlayerTypeTest;
 import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.PlayerTypeTestResultEntity;
-import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.Question;
+import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.PlayerTypeTestQuestion;
 import de.unistuttgart.iste.meitrex.playertype_service.persistence.entity.PlayerTypeTestResult;
 import de.unistuttgart.iste.meitrex.playertype_service.service.PlayerTypeService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class PlayerTypeController {
     private final PlayerTypeTest test = new PlayerTypeTest();
 
     @QueryMapping
-    public Question[] test() {
+    public PlayerTypeTestQuestion[] test() {
         return this.test.getQuestions();
     }
 
