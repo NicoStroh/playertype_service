@@ -1,0 +1,34 @@
+type ShortBartleTestResultEntity {
+  userHasTakenTest: Boolean!
+  achieverPercentage: Int!
+  explorerPercentage: Int!
+  socializerPercentage: Int!
+  killerPercentage: Int!
+}
+
+type PlayerTypeTestQuestion {
+  id: ID!
+  text: String!
+  option0: String!
+  option1: String!
+  selectedOption: Boolean!
+}
+
+type ShortBartleTestResult {
+  achieverPercentage: Int!
+  explorerPercentage: Int!
+  socializerPercentage: Int!
+  killerPercentage: Int!
+}
+
+type Mutation {
+  _internal_noauth_submitAnswer(questionId: Int!, answer: Boolean!): String
+  _internal_noauth_evaluateTest(userUUID: UUID!): ShortBartleTestResultEntity!
+}
+
+type Query {
+  _internal_noauth_test: [PlayerTypeTestQuestion!]!
+  _internal_noauth_userHasTakenTest(userUUID: UUID!): Boolean!
+  userCanSeeScoreboard(userUUID: UUID!): Boolean!
+  userCanSeeBadges(userUUID: UUID!): Boolean!
+}

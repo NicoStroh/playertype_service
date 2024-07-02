@@ -24,7 +24,7 @@ public class PlayerTypeService {
     private final PlayerTypeValidator playerTypeValidator;
 
     /**
-     * Creates a new quiz.
+     * Creates a new empty TestResult for the user.
      *
      * @param userUUID     the id of the new user that was just created
      * @return an empty PlayerTypeTestResultEntity, indicating that the user has

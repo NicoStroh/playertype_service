@@ -23,18 +23,18 @@ public class PlayerTypeController {
     private final PlayerTypeService playerTypeService;
     private final PlayerTypeTest test = new PlayerTypeTest();
 
-    @QueryMapping
+    @QueryMapping( name = "_internal_noauth_test")
     public PlayerTypeTestQuestion[] test() {
         return this.test.getQuestions();
     }
 
-    @MutationMapping
+    @MutationMapping( name = "_internal_noauth_submitAnswer")
     public String submitAnswer(@Argument final int questionId, @Argument final boolean answer) {
         this.test.setAnswer(questionId, answer);
         return "Answer submitted successfully!";
     }
 
-    @MutationMapping
+    @MutationMapping( name = "_internal_noauth_evaluateTest")
     public PlayerTypeTestResultEntity evaluateTest(@Argument final UUID userUUID) {
 
         PlayerTypeTestResult result = this.test.evaluateTest();
@@ -42,7 +42,7 @@ public class PlayerTypeController {
 
     }
 
-    @QueryMapping
+    @QueryMapping( name = "_internal_noauth_userHasTakenTest")
     public boolean userHasTakenTest(@Argument final UUID userUUID) {
 
         Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
