@@ -24,10 +24,13 @@ public class PlayerTypeTest {
 
     }
 
+    public boolean justCreated;
+
     private PlayerTypeTestQuestion[] questions = new PlayerTypeTestQuestion[]{};
 
     public PlayerTypeTest() {
 
+        justCreated = true;
         String questionsPath = getQuestionsPath();
 
         if (null != questionsPath) {
@@ -79,6 +82,7 @@ public class PlayerTypeTest {
 
     public void setAnswer(int questionId, boolean selectedAnswer) {
         this.questions[questionId].setSelectedOption(selectedAnswer);
+        justCreated = false;
     }
 
     private double calculateAchieverPercentage() {

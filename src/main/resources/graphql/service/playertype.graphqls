@@ -22,13 +22,13 @@ type ShortBartleTestResult {
 }
 
 type Mutation {
-  _internal_noauth_submitAnswer(questionId: Int!, answer: Boolean!): String
-  _internal_noauth_evaluateTest(userUUID: UUID!): ShortBartleTestResultEntity!
+  submitAnswer(questionId: Int!, answer: Boolean!): String
+  evaluateTest(userUUID: UUID!): ShortBartleTestResultEntity!
 }
 
 type Query {
-  _internal_noauth_test: [PlayerTypeTestQuestion!]!
-  _internal_noauth_userHasTakenTest(userUUID: UUID!): Boolean!
+  test: [PlayerTypeTestQuestion!]!
+  userHasTakenTest(userUUID: UUID!): Boolean!
   userCanSeeScoreboard(userUUID: UUID!): Boolean!
   userCanSeeBadges(userUUID: UUID!): Boolean!
 }

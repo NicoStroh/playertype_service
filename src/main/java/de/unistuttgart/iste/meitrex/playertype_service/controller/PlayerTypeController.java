@@ -21,28 +21,37 @@ import java.util.UUID;
 public class PlayerTypeController {
 
     private final PlayerTypeService playerTypeService;
-    private final PlayerTypeTest test = new PlayerTypeTest();
+    private PlayerTypeTest test;
 
-    @QueryMapping( name = "_internal_noauth_test")
+    @QueryMapping
     public PlayerTypeTestQuestion[] test() {
+        this.test = new PlayerTypeTest();
         return this.test.getQuestions();
     }
 
-    @MutationMapping( name = "_internal_noauth_submitAnswer")
+    @MutationMapping
     public String submitAnswer(@Argument final int questionId, @Argument final boolean answer) {
-        this.test.setAnswer(questionId, answer);
-        return "Answer submitted successfully!";
+
+        if (this.test != null) {
+            this.test.setAnswer(questionId, answer);
+            return "Answer submitted successfully!";
+        }
+        return "No test selected!";
+
     }
 
-    @MutationMapping( name = "_internal_noauth_evaluateTest")
+    @MutationMapping
     public PlayerTypeTestResultEntity evaluateTest(@Argument final UUID userUUID) {
 
-        PlayerTypeTestResult result = this.test.evaluateTest();
-        return playerTypeService.saveTestResult(userUUID, result);
+        if (this.test != null && !this.test.justCreated) {
+            PlayerTypeTestResult result = this.test.evaluateTest();
+            return playerTypeService.saveTestResult(userUUID, result);
+        }
+        return new PlayerTypeTestResultEntity(userUUID, false);
 
     }
 
-    @QueryMapping( name = "_internal_noauth_userHasTakenTest")
+    @QueryMapping
     public boolean userHasTakenTest(@Argument final UUID userUUID) {
 
         Optional<PlayerTypeTestResultEntity> entity = playerTypeService.getEntity(userUUID);
